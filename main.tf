@@ -1,14 +1,14 @@
 terraform {
   backend "s3" {
-    bucket = "YOUR_BUCKET"
-    key    = "YOUR_KEY"
-    region = "YOUR_REGION"
+    bucket = "bassemg-terraform-state"
+    key    = "terraform/backend"
+    region = "eu-central-1"
   }
 }
 
 locals {
   env_name         = "staging"
-  aws_region       = "YOUR_REGION"
+  aws_region       = "eu-central-1"
   k8s_cluster_name = "ms-cluster"
 }
 

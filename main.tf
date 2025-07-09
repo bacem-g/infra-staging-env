@@ -22,11 +22,11 @@ provider "aws" {
 }
 
 data "aws_eks_cluster" "msur" {
-  name              = module.aws-kubernetes-cluster.eks_cluster_id
+  name = module.aws-kubernetes-cluster.eks_cluster_id
 }
 
 module "aws-network" {
-  source = "github.com/implementing-microservices/module-aws-network"
+  source = "github.com/bacem-g/module-aws-network"
 
   env_name              = local.env_name
   vpc_name              = "msur-VPC"
@@ -40,7 +40,7 @@ module "aws-network" {
 }
 
 module "aws-kubernetes-cluster" {
-  source = "github.com/implementing-microservices/module-aws-kubernetes"
+  source = "github.com/bacem-g/module-aws-kubernetes"
 
   ms_namespace       = "microservices"
   env_name           = local.env_name
@@ -60,7 +60,6 @@ module "aws-kubernetes-cluster" {
 # Create namespace
 # Use kubernetes provider to work with the kubernetes cluster API
 provider "kubernetes" {
-  load_config_file       = false
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.msur.certificate_authority.0.data)
   host                   = data.aws_eks_cluster.msur.endpoint
   exec {
@@ -78,9 +77,9 @@ resource "kubernetes_namespace" "ms-namespace" {
 }
 
 module "argo-cd-server" {
-  source = "github.com/implementing-microservices/module-argo-cd"
+  source = "github.com/bacem-g/module-argo-cd"
 
-  aws_region            = local.aws_region
+#  aws_region            = local.aws_region
   kubernetes_cluster_id = data.aws_eks_cluster.msur.id
 
   kubernetes_cluster_name      = module.aws-kubernetes-cluster.eks_cluster_name
@@ -91,7 +90,7 @@ module "argo-cd-server" {
 }
 
 module "aws-databases" {
-  source = "github.com/implementing-microservices/module-aws-db"
+  source = "github.com/bacem-g/module-aws-db"
 
   aws_region     = local.aws_region
   mysql_password = var.mysql_password
@@ -105,7 +104,7 @@ module "aws-databases" {
 }
 
 module "traefik" {
-  source = "github.com/implementing-microservices/module-aws-traefik/"
+  source = "github.com/bacem-g/module-ingress-controller-traefik"
 
   aws_region                   = local.aws_region
   kubernetes_cluster_id        = data.aws_eks_cluster.msur.id

@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Install Helm
         run: |
-          curl https://get.helm.sh/helm-v3.9.0-linux-arm64.tar.gz
+          wget https://get.helm.sh/helm-v3.9.0-linux-arm64.tar.gz
           tar -zxvf helm-v3.9.0-linux-arm64.tar.gz
           mv helm-v3.9.0-linux-arm64/helm /usr/local/bin/helm
           helm version

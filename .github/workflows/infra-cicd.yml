@@ -14,8 +14,11 @@ jobs:
       TF_VAR_mysql_password: ${{ secrets.MYSQL_PASSWORD }}
 
     steps:
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
       - uses: actions/checkout@v2
-
       - name: Install aws-iam-authenticator
         run: |
           echo Installing aws-iam-authenticator...

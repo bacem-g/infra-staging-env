@@ -19,6 +19,7 @@ jobs:
           wget https://get.helm.sh/helm-v3.9.0-linux-arm64.tar.gz
           tar -zxvf helm-v3.9.0-linux-arm64.tar.gz
           mv linux-arm64/helm /usr/local/bin/helm
+          chmod +x /usr/local/bin/helm
           helm version
       - uses: actions/checkout@v2
       - name: Install aws-iam-authenticator

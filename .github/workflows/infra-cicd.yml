@@ -14,13 +14,10 @@ jobs:
       TF_VAR_mysql_password: ${{ secrets.MYSQL_PASSWORD }}
 
     steps:
-      - name: Install Helm
-        run: |
-          wget https://get.helm.sh/helm-v3.9.0-linux-amd64.tar.gz
-          tar -zxvf helm-v3.9.0-linux-amd64.tar.gz
-          mv linux-amd64/helm /usr/local/bin/helm
-          chmod +x /usr/local/bin/helm
-          helm version
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.9.0
       - uses: actions/checkout@v2
       - name: Install aws-iam-authenticator
         run: |

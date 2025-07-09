@@ -79,7 +79,7 @@ resource "kubernetes_namespace" "ms-namespace" {
 module "argo-cd-server" {
   source = "github.com/bacem-g/module-argo-cd"
 
-#  aws_region            = local.aws_region
+  #  aws_region            = local.aws_region
   kubernetes_cluster_id = data.aws_eks_cluster.msur.id
 
   kubernetes_cluster_name      = module.aws-kubernetes-cluster.eks_cluster_name
